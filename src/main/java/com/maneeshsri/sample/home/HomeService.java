@@ -25,7 +25,12 @@ public class HomeService {
 	
 	
 
-	
+	/**
+	 * Using the restTemplate we are getting the response
+	 * 
+	 * @param zipCode
+	 * @return
+	 */
 	public CurrentObservation getWeatherData(String zipCode) {
 		String url = restUrl+apiKey+"/conditions/q/" + zipCode + ".json";
 	

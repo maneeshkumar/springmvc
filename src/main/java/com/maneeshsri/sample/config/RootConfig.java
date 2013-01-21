@@ -4,6 +4,13 @@ import org.springframework.context.annotation.*;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.core.io.ClassPathResource;
 
+
+
+/**
+ * 
+ * @author maneeshkumar
+ *
+ */
 @Configuration
 @ComponentScan(basePackages = { "com.maneeshsri.sample" })
 public class RootConfig {

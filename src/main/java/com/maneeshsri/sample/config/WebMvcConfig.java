@@ -9,8 +9,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+
+/**
+ * 
+ * @author maneeshkumar
+ *
+ */
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurationSupport {
+	
+	
 	
 	private static final String RESOURCES_HANDLER = "/resources/";
 	private static final String RESOURCES_LOCATION = RESOURCES_HANDLER + "**";
@@ -33,7 +41,9 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 
 	
 	
-	
+	/**
+	 * Optional because we are not currently using
+	 */
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler(RESOURCES_HANDLER).addResourceLocations(RESOURCES_LOCATION);
