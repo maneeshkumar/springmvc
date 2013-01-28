@@ -57,4 +57,8 @@ public class HomeController {
 	    
 	    return "homePage";
 	}
+	
+	public HomeService getService(){
+		return this.service;
+	}
 }
