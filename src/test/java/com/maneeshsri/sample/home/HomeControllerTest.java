@@ -1,16 +1,11 @@
 package com.maneeshsri.sample.home;
 
-import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertEquals;
 
-import org.mockito.InjectMocks;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindException;
-import org.springframework.validation.Errors;
-import org.testng.annotations.BeforeMethod;
+import org.springframework.validation.BindingResult;
 import org.testng.annotations.Test;
 
 
@@ -18,15 +13,16 @@ import org.testng.annotations.Test;
 @Test(groups = { "home" })
 public class HomeControllerTest{
 	
-	private HomeService mockHomeService;
+	private HomeService mockHomeService = mock(HomeService.class);
 	
-	private final HomeController controller = new HomeController();
+	private final HomeController controller = new HomeController(mockHomeService);
 	
-    @BeforeMethod(alwaysRun = true)
-    public void init(){
-    	mockHomeService = mock(HomeService.class);
-    }
+	private BindingResult mockBindingResult = mock(BindingResult.class);
 	
+	
+	private Model model = mock(Model.class);
+	
+   
 	@Test
 	public void indexTestForNullInput(){
 		assertEquals(controller.index(null), "homePage");
@@ -37,15 +33,22 @@ public class HomeControllerTest{
 		assertEquals(controller.index(new DisplayLocation()), "homePage");
 	}
 	
-	/**
+	
 	@Test
-	public void weatherTestForInvalidInput(){
+	public void weatherTestForValidInput(){
 		DisplayLocation input = new DisplayLocation();
 		input.setZip("12345");
-		when(mockHomeService.getWeatherData(input.getZip())).thenReturn(new CurrentObservation());
-		Errors error = new BindException(input, "input");
-		Model model = new ExtendedModelMap();
-		assertEquals(controller.weather(input, error, model), "homePage");
+		when(mockBindingResult.hasErrors()).thenReturn(false);
+		when(mockHomeService.getWeatherData(input.getZip())).thenReturn(new DisplayLocation());
+		assertEquals(controller.weather(input, mockBindingResult, model), "homePage");
 	}
-	**/
+	
+	@Test
+	public void weatherTestForInvalidInput(){
+		when(mockBindingResult.hasErrors()).thenReturn(true);
+		assertEquals(controller.weather(null, mockBindingResult, model), "errorPage");
+	}
+	
+	
+	
 }

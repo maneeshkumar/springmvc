@@ -31,11 +31,14 @@ public class HomeService {
 	 * @param zipCode
 	 * @return
 	 */
-	public CurrentObservation getWeatherData(String zipCode) {
+	public DisplayLocation getWeatherData(String zipCode) {
 		String url = restUrl+apiKey+"/conditions/q/" + zipCode + ".json";
 	
 		WundergroundResponse response = restClient.getForObject(url, WundergroundResponse.class);
-		return response.getCurrentObservation();
+		CurrentObservation currentObservation = response.getCurrentObservation();
+		DisplayLocation displayLocation = currentObservation.getDisplayLocation();
+		displayLocation.setTemp(currentObservation.getTemperature());
+		return displayLocation;
 	}
 
 }
